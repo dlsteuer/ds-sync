@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package ds_sync;
+
+option go_package = "pb";
+
+service ServiceDSSync {
+    rpc ListCompleted(ListCompletedRequest) returns (ListCompletedResponse) {}
+    rpc DownloadFile(DownloadFileRequest) returns (stream DownloadFileResponse) {}
+}
+
+message ListCompletedRequest {}
+message ListCompletedResponse {
+    repeated string files = 1;
+}
+
+message DownloadFileRequest {
+    string file = 1;
+}
+message DownloadFileResponse {
+    int64 sizeInBytes = 1;
+    bytes blake2B = 2;
+    bytes data = 3;
+    bool isLastChunk = 4;
+}
+
