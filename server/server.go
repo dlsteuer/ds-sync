@@ -38,7 +38,10 @@ func (ss *SyncServer) DownloadFile(req *pb.DownloadFileRequest, stream pb.Servic
 		return err
 	}
 
+	defer f.Close()
+
 	scanner := bufio.NewScanner(f)
+	scanner.Split(bufio.ScanBytes)
 	chunks := make(chan *pb.DownloadFileResponse)
 	go func() {
 		buf := &bytes.Buffer{}
@@ -50,7 +53,7 @@ func (ss *SyncServer) DownloadFile(req *pb.DownloadFileRequest, stream pb.Servic
 					SizeInBytes: int64(len(b)),
 					Data:        b,
 					IsLastChunk: false,
-					Blake2B:     calcBlake2b(b),
+					Blake2B:     CalcBlake2b(b),
 				}
 				buf.Reset()
 			}
@@ -61,7 +64,7 @@ func (ss *SyncServer) DownloadFile(req *pb.DownloadFileRequest, stream pb.Servic
 			SizeInBytes: int64(len(b)),
 			Data:        b,
 			IsLastChunk: true,
-			Blake2B:     calcBlake2b(b),
+			Blake2B:     CalcBlake2b(b),
 		}
 	}()
 
@@ -75,7 +78,7 @@ func (ss *SyncServer) DownloadFile(req *pb.DownloadFileRequest, stream pb.Servic
 	return nil
 }
 
-func calcBlake2b(b []byte) []byte {
+func CalcBlake2b(b []byte) []byte {
 	h, _ := blake2b.New512(nil)
 	h.Write(b)
 	return []byte(h.Sum(nil))

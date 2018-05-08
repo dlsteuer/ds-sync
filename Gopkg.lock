@@ -3,11 +3,7 @@
 
 [[projects]]
   name = "github.com/gogo/protobuf"
-  packages = [
-    "gogoproto",
-    "proto",
-    "protoc-gen-gogo/descriptor"
-  ]
+  packages = ["proto"]
   revision = "1adfc126b41513cc696b209667c8656ea7aac67c"
   version = "v1.0.0"
 
@@ -55,6 +51,7 @@
   branch = "master"
   name = "golang.org/x/crypto"
   packages = [
+    "blake2b",
     "curve25519",
     "ed25519",
     "ed25519/internal/edwards25519",
@@ -78,6 +75,12 @@
     "trace"
   ]
   revision = "640f4622ab692b87c2f3a94265e6f579fe38263d"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/sys"
+  packages = ["cpu"]
+  revision = "7db1c3b1a98089d0071c84f646ff5c96aad43682"
 
 [[projects]]
   name = "golang.org/x/text"
@@ -139,6 +142,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "e5d122ca368f674a909ccb1940769f634592338c6a37e25ea3c994b9322fc136"
+  inputs-digest = "a8300963b7de8a15bdea3b9c0d14327d3880b8f4439bea001966e35e520b3adb"
   solver-name = "gps-cdcl"
   solver-version = 1
